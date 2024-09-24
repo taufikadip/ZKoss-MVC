@@ -1,0 +1,41 @@
+
+
+<zk>
+    <style>
+        .no-padding {
+        padding: 0 !important;
+        }
+    </style>
+
+    <borderlayout width="100%" height="100%" vflex="min">
+        <center vflex="min" border="none" sclass="no-padding" style="background:#F9FCFF;">
+            <borderlayout>
+                <north vflex="min" style="background:#F9FCFF;" border="none" sclass="no-padding">
+                    <div height="100px" style="color:black;display:flex;align-items:center;">
+                        <label value="Add User" style="font-size: 32px; color: #000000; font-weight: bold;"/>
+                    </div>
+                </north>
+                <south vflex="min" border="none" style="background:#F9FCFF;">
+                    <div height="20px"  style="color:gray; text-alignment:center;">Footer</div>
+                </south>
+                <center vflex="min" border="none" style="background:#FFFFFF;" self="@insert(content)">
+                </center>
+            </borderlayout>
+        </center>
+        <west width="360px" border="none" sclass="no-padding" style="background:#adcae7;" >
+            <vbox>
+                <label value="Dashboard new" style="font-size: 24px; color: #000000; font-weight: bold;"/>
+                <grid>
+                    <columns>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row><button id="goToIndex" label="Index Page" width="100%" href="index.zul"/></row>
+                        <row><button id="goToForm" label="Form Page" width="100%" href="helloworld.zul"/></row>
+                        <row><button id="goToTable" label="Table Page" width="100%" href="searchMvc.zul"/></row>
+                    </rows>
+                </grid>
+            </vbox>
+        </west>
+    </borderlayout>
+</zk>

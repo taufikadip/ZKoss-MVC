@@ -1,0 +1,390 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="template.zul"?>
+
+<zk>
+<!--    <window title="Embedded Style" border="normal" width="200px">-->
+<!--        Hello, Embedded!-->
+<!--    </window>-->
+
+<!--    <toolbarbutton label="More info" onClick="info.doPopup()"/><span>-->
+<!--    <window id="info" visible="false" width="120px" border="normal" position="parent">-->
+<!--            Here is more information-->
+<!--    </window></span>-->
+
+<!--        <window id="win" title="Hi!" border="normal" width="200px">-->
+<!--            <caption>-->
+<!--                <toolbarbutton label="Help"/>-->
+<!--            </caption>-->
+<!--            <checkbox label="Hello, Wolrd!"/>-->
+<!--        </window>-->
+
+<!--        <button label="Overlap" onClick="win.doOverlapped();"/>-->
+<!--        <button label="Popup" onClick="win.doPopup();"/>-->
+<!--        <button label="Modal" onClick="win.doModal();"/>-->
+<!--        <button label="Embed" onClick="win.doEmbedded();"/>-->
+<!--        <button label="Highlighted" onClick="win.doHighlighted();"/>-->
+
+    <style>
+        .z-icon-male { color: green; }
+
+        .z-icon-female { color: red; }
+
+        .flag-indonesia {
+        background-image: url('/resources/flags/indonesia.png');
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        padding-left: 20px;
+        }
+
+        .flag-usa {
+        background-image: url('/resources/flags/usa.png');
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        padding-left: 20px;
+        }
+
+        .flag-japan {
+        background-image: url('/resources/flags/japan.png');
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        padding-left: 20px;
+        }
+    </style>
+
+    <zscript>
+        public void changeSubmitStatus() {
+        boolean isChecked = ((Checkbox) self.getFellow("acceptTermBox")).isChecked();
+        Button submitButton = (Button) self.getFellow("submitButton");
+
+        if (isChecked) {
+        submitButton.setDisabled(false);
+        submitButton.setIconSclass("z-icon-check");
+        } else {
+        submitButton.setDisabled(true);
+        submitButton.setIconSclass("");
+            }
+        }
+    </zscript>
+
+    <window title="Welcome! New User" border="none" width="480px" position="center" mode="embedded"
+            style="backgorund-color: #ffffff;"
+            self="@define(content)">
+
+        <zscript>
+            public void resetButton() {
+                username.setRawValue("");
+                username.setConstraint("no empty");
+                gender.setSelectedItem(null);
+                birthday.setRawValue("");
+                birthday.setConstraint("no empty, no future, no today");
+                address.setRawValue("");
+                address.setConstraint("no empty");
+                acceptTermBox.setChecked(false);
+                major.setRawValue("");
+            }
+        </zscript>
+
+        <grid>
+            <auxhead>
+                <auxheader iconSclass="z-icon-user" label="Registration Form" colspan="2"/>
+            </auxhead>
+            <columns>
+                <column/><column width="256px"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="User Name"/>
+                    <textbox width="99%" constraint="no empty" id="username" placeholder="(ex: Topik)"/>
+                </row>
+                <row>
+                    <label value="Gender"/>
+                    <radiogroup id="gender">
+                        <radio label="Male" iconSclass="z-icon-male"/>
+                        <radio label="Female" iconSclass="z-icon-female"/>
+                    </radiogroup>
+                </row>
+                <row>
+                    <label value="Birthday"/>
+                    <datebox id="birthday" buttonVisible="true" width="100%" placeholder="Select Birth Date" constraint="no empty, no today, no future"/>
+                </row>
+                <row>
+                    <label value="Employment"/>
+                    <combobox id="employment" placeholder="Search or select" constraint="no empty">
+                        <comboitem label="Fulltime"/>
+                        <comboitem label="Parttime"/>
+                        <comboitem label="Internship"/>
+                    </combobox>
+                </row>
+                <row>
+                    <label value="Country"/>
+                    <combobox id="country" placeholder="Search or select" constraint="no empty">
+                        <comboitem label="Indonesia" sclass="flag-indonesia" />
+                        <comboitem label="USA" sclass="flag-usa" />
+                        <comboitem label="Japan" sclass="flag-japan" />
+                    </combobox>
+                </row>
+                <row align="center" spans="2">
+                    <span>
+                        <checkbox id="acceptTermBox" onCheck="changeSubmitStatus()" label="Accept Term of Use"/>
+                        <label popup="popup_id, position=end_after" style="cursor: pointer">(Click for detail)</label>
+
+                        <popup id="popup_id">
+                            <vbox>
+                                Term of Use
+                                <toolbarbutton label="This is the term of use ZK your killer Web application now!"
+                                               href="http://www.zkoss.org" />
+                            </vbox>
+                        </popup>
+<!--                        <label value="More info" onClick="info.doPopup()"/>-->
+                    </span>
+                </row>
+                <row spans="2" align="center">
+                    <span>
+                        <label popup="popuphelp, position=end_after" style="cursor: pointer">Help</label>
+
+                        <popup id="popuphelp">
+                            <vbox>
+                                HELPP
+                                <toolbarbutton label="This is the Help Popup "
+                                               href="http://www.zkoss.org" />
+                            </vbox>
+                        </popup>
+                        <button id="resetButton" label="Reset" onClick="resetButton()"/>
+                        <button id="submitButton" label="Submit" disabled="true" href="index.zul"/>
+                    </span>
+                </row>
+            </rows>
+        </grid>
+    </window>
+
+<!--    <grid model="${lm}" width="300px"-->
+<!--          onAfterRender='gridCount.setValue("row count: "+self.getRows().getChildren().size()+"");' />-->
+<!--    <label id="gridCount" />-->
+
+<!--    <grid id="grid" autopaging="true" mold="paging" vflex="1">-->
+<!--        <columns>-->
+<!--            <column label="column1"/>-->
+<!--        </columns>-->
+<!--        <rows>-->
+<!--            <row forEach="${items}">-->
+<!--                ${each}-->
+<!--            </row>-->
+<!--        </rows>-->
+<!--    </grid>-->
+
+<!--    <grid>-->
+<!--        <auxhead>-->
+<!--            <auxheader label="H1'07" colspan="6"/>-->
+<!--            <auxheader label="H2'07" colspan="6"/>-->
+<!--        </auxhead>-->
+<!--        <auxhead>-->
+<!--            <auxheader label="Q1" colspan="3"/>-->
+<!--            <auxheader label="Q2" colspan="3"/>-->
+<!--            <auxheader label="Q3" colspan="3"/>-->
+<!--            <auxheader label="Q4" colspan="3"/>-->
+<!--        </auxhead>-->
+<!--        <columns>-->
+<!--            <column label="Jan"/><column label="Feb"/><column label="Mar"/>-->
+<!--            <column label="Apr"/><column label="May"/><column label="Jun"/>-->
+<!--            <column label="Jul"/><column label="Aug"/><column label="Sep"/>-->
+<!--            <column label="Oct"/><column label="Nov"/><column label="Dec"/>-->
+<!--        </columns>-->
+<!--        <rows>-->
+<!--            <row>-->
+<!--                <label value="1,000"/><label value="1,100"/><label value="1,200"/>-->
+<!--                <label value="1,300"/><label value="1,400"/><label value="1,500"/>-->
+<!--                <label value="1,600"/><label value="1,700"/><label value="1,800"/>-->
+<!--                <label value="1,900"/><label value="2,000"/><label value="2,100"/>-->
+<!--            </row>-->
+<!--        </rows>-->
+<!--    </grid>-->
+
+<!--    <grid width="600px">-->
+<!--        <auxhead>-->
+<!--            <auxheader label="A" colspan="4" />-->
+<!--            <auxheader label="B" colspan="4" />-->
+<!--            <auxheader label="C" colspan="4" />-->
+<!--        </auxhead>-->
+<!--        <columns>&lt;!&ndash; this is wrong since the number of column components is smaller &ndash;&gt;-->
+<!--            <column label="X"/>-->
+<!--            <column label="Y"/>-->
+<!--            <column label="Z"/>-->
+<!--        </columns>-->
+<!--        <rows>-->
+<!--            <row>-->
+<!--                <label forEach="E,F,H" value="${each}"/>&lt;!&ndash; four columns &ndash;&gt;-->
+<!--            </row>-->
+<!--        </rows>-->
+<!--    </grid>-->
+
+<!--    <grid width="200px">-->
+<!--        <auxhead>-->
+<!--            <auxheader label="A" rowspan="2" />-->
+<!--            <auxheader label="BC" colspan="2" />-->
+<!--            <auxheader label="D" rowspan="2" />-->
+<!--        </auxhead>-->
+<!--        <auxhead>-->
+<!--            <auxheader label="B"/>-->
+<!--            <auxheader label="C"/>-->
+<!--        </auxhead>-->
+<!--        <columns/> &lt;!&ndash; use an empty columns to make fakers created correctly &ndash;&gt;-->
+<!--        <rows>-->
+<!--            <row>-->
+<!--                <label forEach="E,F,G,H" value="${each}"/>-->
+<!--            </row>-->
+<!--        </rows>-->
+<!--    </grid>-->
+
+<!--    <window>-->
+<!--        <grid>-->
+<!--            <columns id="cs" sizable="true">-->
+<!--                <column label="AA"/>-->
+<!--                <column label="BB"/>-->
+<!--                <column label="CC"/>-->
+<!--            </columns>-->
+<!--            <rows>-->
+<!--                <row>-->
+<!--                    <label value="AA01"/>-->
+<!--                    <label value="BB01"/>-->
+<!--                    <label value="CC01"/>-->
+<!--                </row>-->
+<!--                <row>-->
+<!--                    <label value="AA01"/>-->
+<!--                    <label value="BB01"/>-->
+<!--                    <label value="CC01"/>-->
+<!--                </row>-->
+<!--                <row>-->
+<!--                    <label value="AA01"/>-->
+<!--                    <label value="BB01"/>-->
+<!--                    <label value="CC01"/>-->
+<!--                </row>-->
+<!--            </rows>-->
+<!--        </grid>-->
+<!--        <checkbox label="sizeable" checked="true" onCheck="cs.sizeable = self.checked"/>-->
+<!--    </window>-->
+
+<!--    <tree width="200px">-->
+<!--        <treecols>-->
+<!--            <treecol label="Subject"/>-->
+<!--            <treecol label="From"/>-->
+<!--        </treecols>-->
+<!--        <treechildren>-->
+<!--            <treeitem open="false" onOpen="load()">-->
+<!--                <treerow>-->
+<!--                    <treecell label="Intel Snares XML"/>-->
+<!--                    <treecell label="David Needle"/>-->
+<!--                </treerow>-->
+<!--                <treechildren/>-->
+<!--            </treeitem>-->
+<!--        </treechildren>-->
+<!--        <zscript>-->
+<!--            void load() {-->
+<!--            Treechildren tc = self.getTreechildren();-->
+<!--            if (tc.getChildren().isEmpty()) {-->
+<!--            Treeitem ti = new Treeitem();-->
+<!--            ti.setLabel("New added");-->
+<!--            ti.setParent(tc);-->
+<!--            }-->
+<!--            }-->
+<!--        </zscript>-->
+<!--    </tree>-->
+
+<!--    <tree rows="3">-->
+<!--        <treecols>-->
+<!--            <treecol label="Name"/>-->
+<!--            <treecol label="Description"/>-->
+<!--        </treecols>-->
+<!--        <treechildren>-->
+<!--            <treeitem>-->
+<!--                <treerow>-->
+<!--                    <treecell label="Item 1"/>-->
+<!--                    <treecell label="Item 1 description"/>-->
+<!--                </treerow>-->
+<!--            </treeitem>-->
+<!--            <treeitem>-->
+<!--                <treerow>-->
+<!--                    <treecell label="Item 2"/>-->
+<!--                    <treecell label="Item 2 description"/>-->
+<!--                </treerow>-->
+<!--                <treechildren>-->
+<!--                    <treeitem>-->
+<!--                        <treerow>-->
+<!--                            <treecell label="Item 2.1"/>-->
+<!--                        </treerow>-->
+<!--                        <treechildren>-->
+<!--                            <treeitem>-->
+<!--                                <treerow>-->
+<!--                                    <treecell label="Item 2.1.1"/>-->
+<!--                                </treerow>-->
+<!--                            </treeitem>-->
+<!--                            <treeitem>-->
+<!--                                <treerow>-->
+<!--                                    <treecell label="Item 2.1.2"/>-->
+<!--                                </treerow>-->
+<!--                            </treeitem>-->
+<!--                        </treechildren>-->
+<!--                    </treeitem>-->
+<!--                    <treeitem>-->
+<!--                        <treerow>-->
+<!--                            <treecell label="Item 2.2"/>-->
+<!--                            <treecell label="Item 2.2 is something who cares"/>-->
+<!--                        </treerow>-->
+<!--                    </treeitem>-->
+<!--                </treechildren>-->
+<!--            </treeitem>-->
+<!--            <treeitem label="Item 3"/>-->
+<!--        </treechildren>-->
+<!--    </tree>-->
+
+<!--    <window title="Gmaps Demo" border="normal" width="520px">-->
+<!--        <script type="text/javascript" content="zk.googleAPIkey='Your-Google-API-Key';"/>-->
+
+<!--        &lt;!&ndash; you may wish to specify the version of google map API manually for some reason,-->
+<!--            use version="[version]" to do it.-->
+<!--            ex: <gmaps version="3.25" id="mymap" ... /> &ndash;&gt;-->
+<!--        <gmaps id="mymap" width="500px" height="300px" showSmallCtrl="true">-->
+<!--            <ginfo id="myinfo" open="true">-->
+<!--                <![CDATA[-->
+<!--				Hello, <a href="http://www.zkoss.org">ZK</a>.-->
+<!--			]]>-->
+<!--            </ginfo>-->
+
+<!--            <gmarker id="mymark" lat="37.4410" lng="-122.1490">-->
+<!--                <![CDATA[-->
+<!--				Hello, <a href="http://www.zkoss.org">ZK</a> on top of Gmarker.-->
+<!--			]]>-->
+<!--            </gmarker>-->
+
+<!--            <attribute name="onMapClick">-->
+<!--                Gmarker gmarker = event.getGmarker();-->
+<!--                if (gmarker != null) {-->
+<!--                gmarker.setOpen(true);-->
+<!--                }-->
+<!--            </attribute>-->
+<!--        </gmaps>-->
+<!--    </window>-->
+
+<!--    <div height="450px">-->
+<!--        <checkbox label="Attach icon edge at bottom"-->
+<!--                  onCheck='fsb.attachEdge=self.checked?"bottom":"top"' />-->
+<!--        <checkbox label="Vertical orient"-->
+<!--                  onCheck='fsb.orient=self.checked?"vertical":"horizontal"' />-->
+<!--        <separator bar="true" />-->
+<!--        <fisheyebar id="fsb" style="position:absolute;margin:80px 150px;"-->
+<!--                    attachEdge="top" itemWidth="80" itemHeight="80" itemMaxHeight="160" itemMaxWidth="160">-->
+<!--            <fisheye image="/img/Centigrade-Widget-Icons/FolderABlue-128x128.png" label="Folder"-->
+<!--                     onClick="alert(self.label)" />-->
+<!--            <fisheye image="/img/Centigrade-Widget-Icons/ReadingGlass-128x128.png" label="Reading Glasses"-->
+<!--                     onClick="alert(self.label)" />-->
+<!--            <fisheye image="/img/Centigrade-Widget-Icons/Briefcase-128x128.png" label="Project"-->
+<!--                     onClick="alert(self.label)" />-->
+<!--            <fisheye image="/img/Centigrade-Widget-Icons/MailboxFlag-128x128.png"-->
+<!--                     label="Email" onClick="alert(self.label)" />-->
+<!--            <fisheye image="/img/Centigrade-Widget-Icons/Globe-128x128.png"-->
+<!--                     label="Globe" onClick="alert(self.label)" />-->
+<!--            <fisheye image="/img/Centigrade-Widget-Icons/Spyglass-128x128.png" label="Spyglass"-->
+<!--                     onClick="alert(self.label)" />-->
+<!--        </fisheyebar>-->
+<!--    </div>-->
+
+
+</zk>
