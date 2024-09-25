@@ -65,21 +65,25 @@
         }
     </zscript>
 
+<!--    <window title="Welcome! New User" border="none" width="480px" position="center" mode="embedded"-->
+<!--            style="backgorund-color: #ffffff;"-->
+<!--            self="@define(content)">-->
     <window title="Welcome! New User" border="none" width="480px" position="center" mode="embedded"
-            style="backgorund-color: #ffffff;"
-            self="@define(content)">
+            viewModel="@id('vm') @init('com.fif.SearchViewModel')" self="@define(content)"
+            apply="org.zkoss.bind.BindComposer">
 
         <zscript>
             public void resetButton() {
-                username.setRawValue("");
-                username.setConstraint("no empty");
+                name.setRawValue("");
+                name.setConstraint("no empty");
                 gender.setSelectedItem(null);
                 birthday.setRawValue("");
                 birthday.setConstraint("no empty, no future, no today");
-                address.setRawValue("");
-                address.setConstraint("no empty");
+                employment.setRawValue("");
+                employment.setConstraint("no empty");
+                country.setRawValue("");
+                country.setConstraint("no empty");
                 acceptTermBox.setChecked(false);
-                major.setRawValue("");
             }
         </zscript>
 
@@ -93,22 +97,22 @@
             <rows>
                 <row>
                     <label value="User Name"/>
-                    <textbox width="99%" constraint="no empty" id="username" placeholder="(ex: Topik)"/>
+                    <textbox value="@save(vm.name)" id="name" width="99%" constraint="no empty" placeholder="(ex: Topik)"/>
                 </row>
                 <row>
                     <label value="Gender"/>
-                    <radiogroup id="gender">
-                        <radio label="Male" iconSclass="z-icon-male"/>
-                        <radio label="Female" iconSclass="z-icon-female"/>
+                    <radiogroup id="gender" selectedItem="@save(vm.gender)">
+                        <radio label="Male" iconSclass="z-icon-male" value="Male"/>
+                        <radio label="Female" iconSclass="z-icon-female" value="Female"/>
                     </radiogroup>
                 </row>
                 <row>
                     <label value="Birthday"/>
-                    <datebox id="birthday" buttonVisible="true" width="100%" placeholder="Select Birth Date" constraint="no empty, no today, no future"/>
+                    <datebox value="@save(vm.birthday)" id="birthday" buttonVisible="true" width="100%" placeholder="Select Birth Date" constraint="no empty, no today, no future"/>
                 </row>
                 <row>
                     <label value="Employment"/>
-                    <combobox id="employment" placeholder="Search or select" constraint="no empty">
+                    <combobox value="@save(vm.employment)" id="employment" placeholder="Search or select" constraint="no empty">
                         <comboitem label="Fulltime"/>
                         <comboitem label="Parttime"/>
                         <comboitem label="Internship"/>
@@ -116,7 +120,7 @@
                 </row>
                 <row>
                     <label value="Country"/>
-                    <combobox id="country" placeholder="Search or select" constraint="no empty">
+                    <combobox value="@save(vm.country)" id="country" placeholder="Search or select" constraint="no empty">
                         <comboitem label="Indonesia" sclass="flag-indonesia" />
                         <comboitem label="USA" sclass="flag-usa" />
                         <comboitem label="Japan" sclass="flag-japan" />
@@ -149,7 +153,8 @@
                             </vbox>
                         </popup>
                         <button id="resetButton" label="Reset" onClick="resetButton()"/>
-                        <button id="submitButton" label="Submit" disabled="true" href="index.zul"/>
+                        <button id="submitButton" label="Submit" disabled="true"
+                                onClick="@command('addPerson')"/>
                     </span>
                 </row>
             </rows>
@@ -385,6 +390,5 @@
 <!--                     onClick="alert(self.label)" />-->
 <!--        </fisheyebar>-->
 <!--    </div>-->
-
 
 </zk>

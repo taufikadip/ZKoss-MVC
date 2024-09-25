@@ -1,24 +1,34 @@
 package com.fif.model;
 
+import java.util.Date;
+
 public class Person {
+
+    private String id;
 
     private String name;
 
     private String gender;
 
-    private String birthday;
+    private Date birthday;
 
     private String employment;
 
     private String country;
 
-    public Person(String name, String gender, String birthday, String employment, String country) {
+    public Person(String id, String name, String gender, Date birthday, String employment, String country) {
+        this.id = id;
         this.name = name;
         this.gender = gender;
-        this.birthday = birthday;
+        this.birthday = birthday;  // Pastikan tipe birthday adalah Date
         this.employment = employment;
         this.country = country;
     }
+
+    public String getId() {
+        return id;
+    }
+
 
     public String getName() {
         return name;
@@ -28,9 +38,7 @@ public class Person {
         return gender;
     }
 
-    public String getBirthday() {
-        return birthday;
-    }
+    public Date getBirthday() { return birthday; }
 
     public String getEmployment() {
         return employment;
@@ -38,6 +46,10 @@ public class Person {
 
     public String getCountry() {
         return country;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -48,7 +60,7 @@ public class Person {
         this.gender = gender;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
